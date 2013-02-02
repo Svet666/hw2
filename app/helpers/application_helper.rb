@@ -9,7 +9,12 @@ module ApplicationHelper
   if ((column == sort_column) && (sort_direction == "ASC")) 
     @direction = "DESC"
   end
-  link_to title, {:sort => column, :direction => @direction}, {:class => @css_class}
+  
+  link_to title, {:sort => column, :direction => @direction}
  end
-	
+ def hilite?(title = nil)
+  if title == sort_column
+  "hilite"
+  end
+ end	
 end

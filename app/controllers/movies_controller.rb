@@ -7,11 +7,23 @@ class MoviesController < ApplicationController
   end
 
   def index
+   
+   @all_ratings = Movie.ratings
+   @selected_ratings = params.fetch(:ratings, {}).keys
+      
+   @commit = params[:commit]
+  
+   if @selected_ratings.empty?
+    @selected_ratings = @all_ratings
+   end
+
+   @movies = Movie.where("rating in (?)", @selected_ratings)
+
    if(params.has_key?(:sort))
-   @movies = Movie.order(sort_column + " " + sort_direction)
+   @movies = @movies.order(sort_column + " " + sort_direction)
    
    else
-   @movies = Movie.all
+   @movies
    end
   end
 

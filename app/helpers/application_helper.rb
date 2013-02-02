@@ -16,5 +16,8 @@ module ApplicationHelper
   if title == sort_column
   "hilite"
   end
+ end
+ def is_checked?(rating, selected_ratings)
+   selected_ratings.include? rating
  end	
 end

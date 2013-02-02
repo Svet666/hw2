@@ -10,7 +10,7 @@ module ApplicationHelper
     @direction = "DESC"
   end
   
-  link_to title, {:sort => column, :direction => @direction}
+  link_to title, {:sort => column, :direction => @direction}, {:id => column + "_header"}
  end
  def hilite?(title = nil)
   if title == sort_column

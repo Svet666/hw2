@@ -9,15 +9,20 @@ class MoviesController < ApplicationController
   def index
    
    @all_ratings = Movie.ratings
-   @selected_ratings = params.fetch(:ratings, {}).keys
-      
+   @selected_ratings = session[:selected_ratings]
    @commit = params[:commit]
-  
-   if @selected_ratings.empty?
+   
+   commit = params[:commit]
+   if commit then
+    @selected_ratings = params.fetch(:ratings, {}).keys
+    session[:selected_ratings] = @selected_ratings
+   end
+   if session[:selected_ratings].blank?
+    session[:selected_ratings] = @all_ratings
     @selected_ratings = @all_ratings
    end
 
-   @movies = Movie.where("rating in (?)", @selected_ratings)
+   @movies = Movie.where("rating in (?)", session[:selected_ratings])
 
    if(params.has_key?(:sort))
    @movies = @movies.order(sort_column + " " + sort_direction)
